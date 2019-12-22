@@ -1,3 +1,7 @@
+package storage;
+
+import model.Resume;
+
 import java.util.Arrays;
 
 /**
@@ -24,29 +28,29 @@ public class ArrayStorage {
                 }
             }
         } else {
-            System.out.println("Resume not found!");
+            System.out.println("model.Resume not found!");
         }
     }
 
-    void clear() {
+    public void clear() {
         Arrays.fill(storage, null);
         size = 0;
     }
 
-    void save(Resume r) {
+    public void save(Resume r) {
         if (size < 10000) {
             if (!resumeExists(r.uuid)) {
                 storage[size] = r;
                 size++;
             } else {
-                System.out.println("Resume already exists!");
+                System.out.println("model.Resume already exists!");
             }
         } else {
             System.out.println("The storage is full");
         }
     }
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         if (resumeExists(uuid)) {
             for (int i = 0; i < size; i++) {
                 if (storage[i].uuid.equals(uuid)) {
@@ -54,12 +58,12 @@ public class ArrayStorage {
                 }
             }
         } else {
-            System.out.println("Resume not found!");
+            System.out.println("model.Resume not found!");
         }
         return null;
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         if (resumeExists(uuid)) {
             int newSize = size - 1;
             for (int i = 0; i <= newSize; i++) {
@@ -71,18 +75,18 @@ public class ArrayStorage {
             }
             size = newSize;
         } else {
-            System.out.println("Resume not found!");
+            System.out.println("model.Resume not found!");
         }
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 }
