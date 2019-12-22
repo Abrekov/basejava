@@ -7,7 +7,7 @@ public class ArrayStorage {
     Resume[] storage = new Resume[10000];
     int size = 0;
 
-    boolean isResumeExists(String uuid) {
+    boolean resumeExists(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
                 return true;
@@ -17,7 +17,7 @@ public class ArrayStorage {
     }
 
     void update(Resume resume) {
-        if (isResumeExists(resume.uuid)) {
+        if (resumeExists(resume.uuid)) {
             for (int i = 0; i < size; i++) {
                 if (storage[i].uuid.equals(resume.uuid)) {
                     storage[i] = resume;
@@ -35,7 +35,7 @@ public class ArrayStorage {
 
     void save(Resume r) {
         if (size < 10000) {
-            if (!isResumeExists(r.uuid)) {
+            if (!resumeExists(r.uuid)) {
                 storage[size] = r;
                 size++;
             } else {
@@ -47,7 +47,7 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        if (isResumeExists(uuid)) {
+        if (resumeExists(uuid)) {
             for (int i = 0; i < size; i++) {
                 if (storage[i].uuid.equals(uuid)) {
                     return storage[i];
@@ -60,7 +60,7 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        if (isResumeExists(uuid)) {
+        if (resumeExists(uuid)) {
             int newSize = size - 1;
             for (int i = 0; i <= newSize; i++) {
                 if (storage[i].uuid.equals(uuid)) {
