@@ -8,42 +8,40 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
-    int size = 0;
+    private Resume[] storage = new Resume[10_000];
+    private int size = 0;
 
-    boolean resumeExists(String uuid) {
+    public int resumeExists(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) {
-                return true;
+            if (storage[i].getUuid().equals(uuid)) {
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 
-    void update(Resume resume) {
-        if (resumeExists(resume.uuid)) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].uuid.equals(resume.uuid)) {
-                    storage[i] = resume;
-                }
-            }
+    public void update(Resume resume) {
+        int index = resumeExists(resume.getUuid());
+        if (index >= 0) {
+            storage[index] = resume;
         } else {
-            System.out.println("model.Resume not found!");
+            System.out.println("Resume not found!");
         }
     }
 
     public void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public void save(Resume r) {
-        if (size < 10000) {
-            if (!resumeExists(r.uuid)) {
-                storage[size] = r;
+    public void save(Resume resume) {
+        if (size < 10_000) {
+            int index = resumeExists(resume.getUuid());
+            if (index < 0) {
+                storage[size] = resume;
                 size++;
             } else {
-                System.out.println("model.Resume already exists!");
+                System.out.println("Resume already exists!");
             }
         } else {
             System.out.println("The storage is full");
@@ -51,31 +49,23 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        if (resumeExists(uuid)) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].uuid.equals(uuid)) {
-                    return storage[i];
-                }
-            }
+        int index = resumeExists(uuid);
+        if (index >= 0) {
+            return storage[index];
         } else {
-            System.out.println("model.Resume not found!");
+            System.out.println("Resume not found!");
         }
         return null;
     }
 
     public void delete(String uuid) {
-        if (resumeExists(uuid)) {
-            int newSize = size - 1;
-            for (int i = 0; i <= newSize; i++) {
-                if (storage[i].uuid.equals(uuid)) {
-                    System.arraycopy(storage, i + 1, storage, i, newSize - i);
-                    storage[newSize] = null;
-                    break;
-                }
-            }
-            size = newSize;
+        int index = resumeExists(uuid);
+        if (index >= 0) {
+            size--;
+            storage[index] = storage[size];
+            storage[size] = null;
         } else {
-            System.out.println("model.Resume not found!");
+            System.out.println("Resume not found!");
         }
     }
 
