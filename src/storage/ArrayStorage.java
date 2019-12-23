@@ -11,17 +11,8 @@ public class ArrayStorage {
     private Resume[] storage = new Resume[10_000];
     private int size = 0;
 
-    public int resumeExists(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public void update(Resume resume) {
-        int index = resumeExists(resume.getUuid());
+        int index = getIndex(resume.getUuid());
         if (index >= 0) {
             storage[index] = resume;
         } else {
@@ -35,8 +26,8 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (size < 10_000) {
-            int index = resumeExists(resume.getUuid());
+        if (size < storage.length) {
+            int index = getIndex(resume.getUuid());
             if (index < 0) {
                 storage[size] = resume;
                 size++;
@@ -49,7 +40,7 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int index = resumeExists(uuid);
+        int index = getIndex(uuid);
         if (index >= 0) {
             return storage[index];
         } else {
@@ -59,7 +50,7 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        int index = resumeExists(uuid);
+        int index = getIndex(uuid);
         if (index >= 0) {
             size--;
             storage[index] = storage[size];
@@ -79,4 +70,14 @@ public class ArrayStorage {
     public int size() {
         return size;
     }
+
+    private int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }
