@@ -7,29 +7,12 @@ import model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            System.out.println("Resume " + uuid + " not found!");
-        } else {
-            size--;
-            storage[index] = storage[size];
-            storage[size] = null;
-        }
+    protected void fillGap(int index) {
+        storage[index] = storage[size];
     }
 
-    public void save(Resume resume) {
-        if (size >= storage.length) {
-            System.out.println("The storage is full");
-        } else {
-            int index = getIndex(resume.getUuid());
-            if (index < 0) {
-                storage[size] = resume;
-                size++;
-            } else {
-                System.out.println("Resume " + resume.getUuid() + " already exists!");
-            }
-        }
+    protected void insert(Resume resume) {
+        storage[size] = resume;
     }
 
     @Override
