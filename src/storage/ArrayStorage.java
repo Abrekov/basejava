@@ -6,12 +6,13 @@ import model.Resume;
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
-
-    protected void fillGap(int index) {
+    @Override
+    protected void remove(int index) {
         storage[index] = storage[size];
     }
 
-    protected void insert(Resume resume) {
+    @Override
+    protected void insert(Resume resume, int index) {
         storage[size] = resume;
     }
 

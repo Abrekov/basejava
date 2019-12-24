@@ -5,15 +5,16 @@ import model.Resume;
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
-
-    protected void fillGap(int index) {
+    @Override
+    protected void remove(int index) {
         if (index < size) {
             System.arraycopy(storage, index + 1, storage, index, size - index);
         }
     }
 
-    protected void insert(Resume resume) {
-        int newIndex = -(getIndex(resume.getUuid())) - 1;
+    @Override
+    protected void insert(Resume resume, int index) {
+        int newIndex = -(index) - 1;
         System.arraycopy(storage, newIndex, storage, newIndex + 1, size - newIndex);
         storage[newIndex] = resume;
     }
