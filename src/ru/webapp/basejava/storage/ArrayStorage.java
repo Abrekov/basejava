@@ -1,9 +1,9 @@
-package storage;
+package ru.webapp.basejava.storage;
 
-import model.Resume;
+import ru.webapp.basejava.model.Resume;
 
 /**
- * Array based storage for Resumes
+ * Array based ru.webapp.basejava.storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
     @Override

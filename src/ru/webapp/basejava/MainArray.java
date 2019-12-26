@@ -1,13 +1,15 @@
-import model.Resume;
-import storage.SortedArrayStorage;
-import storage.Storage;
+package ru.webapp.basejava;
+
+import ru.webapp.basejava.model.Resume;
+import ru.webapp.basejava.storage.SortedArrayStorage;
+import ru.webapp.basejava.storage.Storage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Interactive test for storage.ArrayStorage implementation
+ * Interactive test for ru.webapp.basejava.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {
@@ -35,14 +37,12 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "update":
-                    resume = new Resume();
-                    resume.setUuid(uuid);
+                    resume = new Resume(uuid);
                     ARRAY_STORAGE.update(resume);
                     printAll();
                     break;
                 case "save":
-                    resume = new Resume();
-                    resume.setUuid(uuid);
+                    resume = new Resume(uuid);
                     ARRAY_STORAGE.save(resume);
                     printAll();
                     break;

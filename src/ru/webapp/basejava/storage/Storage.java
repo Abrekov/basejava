@@ -1,6 +1,6 @@
-package storage;
+package ru.webapp.basejava.storage;
 
-import model.Resume;
+import ru.webapp.basejava.model.Resume;
 
 public interface Storage {
 

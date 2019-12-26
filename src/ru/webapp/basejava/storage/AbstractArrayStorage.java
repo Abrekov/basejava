@@ -1,6 +1,9 @@
-package storage;
+package ru.webapp.basejava.storage;
 
-import model.Resume;
+import ru.webapp.basejava.exception.ExistStorageException;
+import ru.webapp.basejava.exception.NotExistStorageException;
+import ru.webapp.basejava.exception.StorageException;
+import ru.webapp.basejava.model.Resume;
 
 import java.util.Arrays;
 
@@ -13,7 +16,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Resume " + uuid + " not found!");
+            throw new NotExistStorageException(uuid);
         } else {
             size--;
             remove(index);
@@ -23,11 +26,11 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void save(Resume resume) {
         if (size >= storage.length) {
-            System.out.println("The storage is full");
+            throw new StorageException("The ru.webapp.basejava.storage is full", resume.getUuid());
         } else {
             int index = getIndex(resume.getUuid());
             if (index >= 0) {
-                System.out.println("Resume " + resume.getUuid() + " already exists!");
+                throw new ExistStorageException(resume.getUuid());
             } else {
                 insert(resume, index);
                 size++;
@@ -38,7 +41,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index < 0) {
-            System.out.println("Resume " + resume.getUuid() + " not found!");
+            throw new NotExistStorageException(resume.getUuid());
         } else {
             storage[index] = resume;
         }
@@ -52,14 +55,13 @@ public abstract class AbstractArrayStorage implements Storage {
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Resume " + uuid + " not found!");
-            return null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
 
     /**
-     * @return array, contains only Resumes in storage (without null)
+     * @return array, contains only Resumes in ru.webapp.basejava.storage (without null)
      */
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
