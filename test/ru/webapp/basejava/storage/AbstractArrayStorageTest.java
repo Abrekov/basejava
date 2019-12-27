@@ -15,9 +15,9 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
-    private static final Resume resume1 = new Resume(UUID_1);
-    private static final Resume resume2 = new Resume(UUID_2);
-    private static final Resume resume3 = new Resume(UUID_3);
+    private static final Resume RESUME1 = new Resume(UUID_1);
+    private static final Resume RESUME2 = new Resume(UUID_2);
+    private static final Resume RESUME3 = new Resume(UUID_3);
 
     protected AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
@@ -26,9 +26,9 @@ public abstract class AbstractArrayStorageTest {
     @Before
     public void setUp() {
         storage.clear();
-        storage.save(resume1);
-        storage.save(resume2);
-        storage.save(resume3);
+        storage.save(RESUME1);
+        storage.save(RESUME2);
+        storage.save(RESUME3);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -55,8 +55,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
-        Resume resume = new Resume(UUID_3);
-        storage.save(resume);
+        storage.save(RESUME3);
     }
 
     @Test(expected = StorageException.class)
@@ -95,8 +94,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void get() {
-        Resume resume = new Resume(UUID_3);
-        Assert.assertEquals(resume, storage.get(UUID_3));
+        Assert.assertEquals(RESUME3, storage.get(UUID_3));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -106,9 +104,10 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] expected = new Resume[]{new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3)};
-        Assert.assertArrayEquals(expected, storage.getAll());
-        Assert.assertEquals(expected.length, storage.getAll().length);
+        Resume[] expected = new Resume[]{RESUME1, RESUME2, RESUME3};
+        Resume[] actual = storage.getAll();
+        Assert.assertArrayEquals(expected, actual);
+        Assert.assertEquals(storage.size(), actual.length);
     }
 
     @Test
