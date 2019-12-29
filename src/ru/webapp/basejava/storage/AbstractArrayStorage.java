@@ -17,34 +17,32 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = getIndex(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
-        } else {
-            size--;
-            remove(index);
-            storage[size] = null;
         }
+        size--;
+        remove(index);
+        storage[size] = null;
     }
 
     public void save(Resume resume) {
+        String uuid = resume.getUuid();
         if (size >= storage.length) {
-            throw new StorageException("The ru.webapp.basejava.storage is full", resume.getUuid());
-        } else {
-            int index = getIndex(resume.getUuid());
-            if (index >= 0) {
-                throw new ExistStorageException(resume.getUuid());
-            } else {
-                insert(resume, index);
-                size++;
-            }
+            throw new StorageException("The ru.webapp.basejava.storage is full", uuid);
         }
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            throw new ExistStorageException(uuid);
+        }
+        insert(resume, index);
+        size++;
     }
 
     public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
+        String uuid = resume.getUuid();
+        int index = getIndex(uuid);
         if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        } else {
-            storage[index] = resume;
+            throw new NotExistStorageException(uuid);
         }
+        storage[index] = resume;
     }
 
     public void clear() {
