@@ -1,21 +1,15 @@
 package ru.webapp.basejava.storage;
 
 import ru.webapp.basejava.exception.ExistStorageException;
-import ru.webapp.basejava.exception.NotExistStorageException;
 import ru.webapp.basejava.model.Resume;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
-
     protected List<Resume> storage = new ArrayList<>();
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+    public void deleteResume(int index) {
         storage.remove(index);
     }
 
@@ -28,12 +22,7 @@ public class ListStorage extends AbstractStorage {
         storage.add(resume);
     }
 
-    public void update(Resume resume) {
-        String uuid = resume.getUuid();
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+    protected void addResume(int index, Resume resume) {
         storage.set(index, resume);
     }
 
@@ -41,11 +30,7 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+    protected Resume getResume(int index) {
         return storage.get(index);
     }
 
