@@ -1,6 +1,5 @@
 package ru.webapp.basejava.storage;
 
-import ru.webapp.basejava.exception.ExistStorageException;
 import ru.webapp.basejava.exception.StorageException;
 import ru.webapp.basejava.model.Resume;
 
@@ -23,15 +22,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         if (size >= storage.length) {
             throw new StorageException("The storage is full", uuid);
         }
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            throw new ExistStorageException(uuid);
-        }
+        int index = checkExist(uuid);
         insert(resume, index);
         size++;
     }
 
-    protected void addResume(int index, Resume resume) {
+    protected void updateResume(int index, Resume resume) {
         storage[index] = resume;
     }
 
