@@ -7,22 +7,22 @@ import ru.webapp.basejava.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void delete(String uuid) {
-        int index = checkUuidNotExists(uuid);
+        int index = checkNotExists(uuid);
         deleteResume(index);
     }
 
     public void update(Resume resume) {
         String uuid = resume.getUuid();
-        int index = checkUuidNotExists(uuid);
+        int index = checkNotExists(uuid);
         updateResume(index, resume);
     }
 
     public Resume get(String uuid) {
-        int index = checkUuidNotExists(uuid);
+        int index = checkNotExists(uuid);
         return getResume(index);
     }
 
-    protected int checkUuidNotExists(String uuid) {
+    protected int checkNotExists(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
