@@ -7,6 +7,8 @@ import ru.webapp.basejava.exception.ExistStorageException;
 import ru.webapp.basejava.exception.NotExistStorageException;
 import ru.webapp.basejava.model.Resume;
 
+import java.util.Arrays;
+
 public abstract class AbstractStorageTest {
     protected static final int STORAGE_LIMIT = 10_000;
     protected Storage storage;
@@ -92,6 +94,7 @@ public abstract class AbstractStorageTest {
     public void getAll() {
         Resume[] expected = new Resume[]{RESUME1, RESUME2, RESUME3};
         Resume[] actual = storage.getAll();
+        Arrays.sort(actual);
         Assert.assertArrayEquals(expected, actual);
         Assert.assertEquals(storage.size(), actual.length);
     }
