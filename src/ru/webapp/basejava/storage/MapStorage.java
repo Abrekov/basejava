@@ -10,27 +10,27 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return storage.get(searchKey.toString());
+        return storage.get((String) searchKey);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-        storage.remove(searchKey.toString());
+        storage.remove(((String) searchKey));
     }
 
     @Override
     protected void doSave(Resume resume, Object searchKey) {
-        storage.put(searchKey.toString(), resume);
+        storage.put((String) searchKey, resume);
     }
 
     @Override
     protected void doUpdate(Resume resume, Object searchKey) {
-        storage.put(searchKey.toString(), resume);
+        storage.put((String) searchKey, resume);
     }
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return storage.containsKey(searchKey.toString());
+        return storage.containsKey((String) searchKey);
     }
 
     @Override
