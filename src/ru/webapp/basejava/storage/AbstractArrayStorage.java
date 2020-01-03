@@ -4,7 +4,6 @@ import ru.webapp.basejava.exception.StorageException;
 import ru.webapp.basejava.model.Resume;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
@@ -12,19 +11,30 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
+    }
+
+    @Override
     protected void doUpdate(Resume resume, Object index) {
         storage[(Integer) index] = resume;
     }
 
-    public List<Resume> getAllSorted() {
-        List<Resume> list = Arrays.asList(Arrays.copyOf(storage, size));
-        Collections.sort(list);
-        return list;
+    @Override
+    public List<Resume> doCopyAll() {
+        return Arrays.asList(Arrays.copyOf(storage, size));
     }
 
     @Override
     protected void doSave(Resume resume, Object index) {
-        if (size >= storage.length) {
+        if (size >= STORAGE_LIMIT) {
             throw new StorageException("The storage is full", resume.getUuid());
         }
         insert(resume, (Integer) index);
@@ -40,15 +50,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     protected Resume doGet(Object index) {
         return storage[(Integer) index];
-    }
-
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
-
-    public int size() {
-        return size;
     }
 
     @Override
