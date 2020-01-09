@@ -6,7 +6,7 @@ import ru.webapp.basejava.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     private static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -23,8 +23,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doUpdate(Resume resume, Object index) {
-        storage[(Integer) index] = resume;
+    protected void doUpdate(Resume resume, Integer index) {
+        storage[index] = resume;
     }
 
     @Override
@@ -33,28 +33,28 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doSave(Resume resume, Object index) {
+    protected void doSave(Resume resume, Integer index) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("The storage is full", resume.getUuid());
         }
-        insert(resume, (Integer) index);
+        insert(resume, index);
         size++;
     }
 
     @Override
-    protected void doDelete(Object index) {
-        remove((Integer) index);
+    protected void doDelete(Integer index) {
+        remove(index);
         storage[--size] = null;
     }
 
     @Override
-    protected Resume doGet(Object index) {
-        return storage[(Integer) index];
+    protected Resume doGet(Integer index) {
+        return storage[index];
     }
 
     @Override
-    protected boolean isExist(Object index) {
-        return (Integer) index >= 0;
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     protected abstract void insert(Resume resume, int index);
