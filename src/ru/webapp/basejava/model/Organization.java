@@ -29,21 +29,20 @@ public class Organization {
 
         Organization that = (Organization) o;
 
-        if (!homePage.equals(that.homePage)) return false;
+        if (!Objects.equals(homePage, that.homePage)) return false;
         if (!startDate.equals(that.startDate)) return false;
         if (!endDate.equals(that.endDate)) return false;
         if (!title.equals(that.title)) return false;
-        return description != null ? description.equals(that.description) : that.description == null;
-
+        return Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        int result = homePage.hashCode();
+        int result = Objects.hashCode(homePage);
         result = 31 * result + startDate.hashCode();
         result = 31 * result + endDate.hashCode();
         result = 31 * result + title.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + Objects.hashCode(description);
         return result;
     }
 

@@ -33,14 +33,14 @@ public class Link {
         Link link = (Link) o;
 
         if (!name.equals(link.name)) return false;
-        return url != null ? url.equals(link.url) : link.url == null;
+        return Objects.equals(url, link.url);
 
     }
 
     @Override
     public int hashCode() {
         int result = name.hashCode();
-        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + Objects.hashCode(url);
         return result;
     }
 }
